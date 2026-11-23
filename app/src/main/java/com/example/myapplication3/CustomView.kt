@@ -75,7 +75,8 @@ class CustomView(context: Context, attributeSet: AttributeSet) : View(context, a
         Log.d("!!!", "Запущена анимация поворота барабана до значения $deg за $DURATION милисек")
         animate().rotation(deg).setDuration(DURATION)
             .setInterpolator(AccelerateDecelerateInterpolator())
-        getTextOrPict()
+        getCurrentSector()
+
 
     }
 
@@ -88,26 +89,34 @@ class CustomView(context: Context, attributeSet: AttributeSet) : View(context, a
         )
     }
 
-    fun getTextOrPict(): Boolean {
-        val centerX = width / 2f
-        val centerY = height / 2f
-        val angle = (Math.toDegrees(
-            atan2(
-                y = y - centerY,
-                x = x - centerX
-            ).toDouble()
-        ) + 360) % 360
-        val index = (angle / (360 / colors.size)).toInt()
+    fun getCurrentSector(): Int {
+        val ostatok = rotation % 360f
+        Log.d("!!!", "Секторы двигаются на $ostatok градусов")
+        val currentSectorAngle = (360f - ostatok)
         Log.d(
             "!!!",
-            "Angle(угол), в котором должен остановится барабан : $angle, но он определяет не то"
+            "Angle(угол), в котором должен остановится барабан : $currentSectorAngle"
         )
-        Log.d("!!!", "Номер : $index - индекс цвета, в котором лежит найденный угол $angle")
-
-
-
-
-        return true
+        val index = (currentSectorAngle / (360f / colors.size)).toInt()
+        Log.d(
+            "!!!",
+            "Номер : $index - индекс цвета, в котором лежит найденный угол $currentSectorAngle"
+        )
+        return index
+//        val centerX = width / 2f
+//        val centerY = height / 2f
+//        val angle = (Math.toDegrees(
+//            atan2(
+//                y = y - centerY,
+//                x = x - centerX
+//            ).toDouble()
+//        ) + 360) % 360
+//        val index = (angle / (360 / colors.size)).toInt()
+//        Log.d(
+//            "!!!",
+//            "Angle(угол), в котором должен остановится барабан : $angle, но он определяет не то"
+//        )
+//        Log.d("!!!", "Номер : $index - индекс цвета, в котором лежит найденный угол $angle")
     }
 
 

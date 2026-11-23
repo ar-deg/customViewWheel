@@ -30,13 +30,15 @@ import androidx.core.view.WindowInsetsCompat
 -создать  2 кнопки рядом с барабаном+ (spin/reset)
      -написать работу кнопок
 -создать стрелку на барабане/у барабана
--барабан должен крутиться и останавливаться(рандомно)
+-барабан должен крутиться(рандомно) и останавливаться
  */
 class MainActivity : AppCompatActivity() {
 
     private lateinit var spinBtn: Button
     private lateinit var customView: CustomView
     private lateinit var resBtn: Button
+
+    private lateinit var tv : TextCustomView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,6 +55,9 @@ class MainActivity : AppCompatActivity() {
         spinBtn.setOnClickListener { customView.spin() }
         resBtn = findViewById<Button>(R.id.resBtn)
         resBtn.setOnClickListener { customView.reset() }
+        tv = findViewById<TextCustomView>(R.id.tv)
+
+
 
 
     }
