@@ -23,6 +23,7 @@ class CustomView(context: Context, attributeSet: AttributeSet) : View(context, a
 
     private val BASE_ROTATION_DEGREES = 3600f
     private val DURATION = 3000L
+    var listener: Listener? = null
 
 
 //    init {
@@ -75,24 +76,27 @@ class CustomView(context: Context, attributeSet: AttributeSet) : View(context, a
         Log.d("!!!", "Запущена анимация поворота барабана до значения $deg за $DURATION милисек")
         animate().rotation(deg).setDuration(DURATION)
             .setInterpolator(AccelerateDecelerateInterpolator())
-        getCurrentSector()
+            .withEndAction {
+                val index = getCurrentSector()
+                listener?.onClick(index)
+            }
 
 
     }
 
-    fun reset() {
-        animate().cancel()
-        rotation = 0f
-        Log.d(
-            "!!!",
-            "Нажали кнопку reset. Очищаем барабан, вращение на начале = $rotation"
-        )
-    }
+//    fun reset() {
+//        animate().cancel()
+//        rotation = 0f
+//        Log.d(
+//            "!!!",
+//            "Нажали кнопку reset. Очищаем барабан, вращение на начале = $rotation"
+//        )
+//    }
 
     fun getCurrentSector(): Int {
         val ostatok = rotation % 360f
         Log.d("!!!", "Секторы двигаются на $ostatok градусов")
-        val currentSectorAngle = (360f - ostatok)
+        val currentSectorAngle = (360f - ostatok) % 360
         Log.d(
             "!!!",
             "Angle(угол), в котором должен остановится барабан : $currentSectorAngle"
@@ -103,6 +107,7 @@ class CustomView(context: Context, attributeSet: AttributeSet) : View(context, a
             "Номер : $index - индекс цвета, в котором лежит найденный угол $currentSectorAngle"
         )
         return index
+
 //        val centerX = width / 2f
 //        val centerY = height / 2f
 //        val angle = (Math.toDegrees(
@@ -117,6 +122,10 @@ class CustomView(context: Context, attributeSet: AttributeSet) : View(context, a
 //            "Angle(угол), в котором должен остановится барабан : $angle, но он определяет не то"
 //        )
 //        Log.d("!!!", "Номер : $index - индекс цвета, в котором лежит найденный угол $angle")
+    }
+
+    interface Listener {
+        fun onClick(index: Int)
     }
 
 

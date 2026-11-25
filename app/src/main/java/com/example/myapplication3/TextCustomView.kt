@@ -21,4 +21,6 @@ class TextCustomView(context: Context, attributeSet: AttributeSet) : View(contex
         super.onDraw(canvas)
         canvas.drawText("Hello World", 180f, 50f, paint)
     }
+
+
 }

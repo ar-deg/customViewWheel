@@ -1,11 +1,15 @@
 package com.example.myapplication3
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.bumptech.glide.Glide
+
 
 /*
 Создать Custom View - Барабан, состоящий из цветов радуги. Каждый цвет означает либо картинку,
@@ -32,13 +36,16 @@ import androidx.core.view.WindowInsetsCompat
 -создать стрелку на барабане/у барабана
 -барабан должен крутиться(рандомно) и останавливаться
  */
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), CustomView.Listener {
 
     private lateinit var spinBtn: Button
     private lateinit var customView: CustomView
     private lateinit var resBtn: Button
 
-    private lateinit var tv : TextCustomView
+    private lateinit var tv: TextCustomView
+    private lateinit var iv: ImageView
+
+    val objects = listOf("текст", "картинка", "текст", "картинка", "текст", "картинка", "текст")
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,16 +56,40 @@ class MainActivity : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+
         }
+
         spinBtn = findViewById<Button>(R.id.spinBtn)
         customView = findViewById<CustomView>(R.id.customView)
         spinBtn.setOnClickListener { customView.spin() }
-        resBtn = findViewById<Button>(R.id.resBtn)
-        resBtn.setOnClickListener { customView.reset() }
+        customView.listener = this
+
         tv = findViewById<TextCustomView>(R.id.tv)
+        iv = findViewById<ImageView>(R.id.iv)
+
+        tv.visibility = View.GONE
+        iv.visibility = View.GONE//VISIBLE
 
 
+        Glide.with(this)
+            .load("https://cataas.com/cat/cute/says/Meow")
+            .into(iv)
 
+        resBtn = findViewById<Button>(R.id.resBtn)
+        resBtn.setOnClickListener {
+            tv.visibility = View.GONE
+            iv.visibility = View.GONE
+        }
+    }
+
+    override fun onClick(index: Int) {
+        if (objects[index] == "картинка") {
+            tv.visibility = View.GONE
+            iv.visibility = View.VISIBLE
+        } else {
+            tv.visibility = View.VISIBLE
+            iv.visibility = View.GONE
+        }
 
     }
 }

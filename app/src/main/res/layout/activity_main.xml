@@ -47,10 +47,19 @@
     <com.example.myapplication3.TextCustomView
         android:id="@+id/tv"
         android:layout_width="220dp"
-        android:layout_height="100dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="210dp"
         app:layout_constraintBottom_toBottomOf="@id/main"
         app:layout_constraintEnd_toEndOf="@id/main"
-        app:layout_constraintStart_toStartOf="@id/main"
-        android:layout_marginBottom="100dp"/>
+        app:layout_constraintStart_toStartOf="@id/main" />
+
+    <ImageView
+        android:id="@+id/iv"
+        android:layout_width="220dp"
+        android:layout_height="145dp"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintBottom_toBottomOf="@id/main"
+        app:layout_constraintEnd_toEndOf="@+id/main"
+        app:layout_constraintStart_toStartOf="@+id/main" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
